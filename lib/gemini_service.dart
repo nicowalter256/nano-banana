@@ -1,9 +1,9 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Service class for integrating Google's Gemini AI
 class GeminiService {
-  static const String _apiKey =
-      'AIzaSyDW-AxBGMh51ll9jV7g8cJn4NCOU7gCv9A'; // Replace with your actual API key
+  static String get _apiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
   late final GenerativeModel _model;
   late final ChatSession _chatSession;
 
@@ -133,13 +133,14 @@ Focus on providing clear, actionable insights.
 
   /// Check if the service is properly configured
   bool isConfigured() {
-    return _apiKey != 'YOUR_GEMINI_API_KEY';
+    return _apiKey.isNotEmpty;
   }
 
   /// Update API key
   void updateApiKey(String newApiKey) {
     // Note: In a real app, you'd want to store this securely
-    // and reinitialize the model
+    // For now, we'll update the environment variable
+    dotenv.env['GEMINI_API_KEY'] = newApiKey;
     _initializeModel();
   }
 }

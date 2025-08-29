@@ -19,12 +19,18 @@ This Flutter project now includes Google's Gemini AI integration for generative 
 
 ### 2. Configure the API Key
 
-**Option A: Update the service directly**
+**Option A: Use Environment Variables (Recommended)**
+
+- Copy `.env.example` to `.env`
+- Replace `your_api_key_here` with your actual API key
+- The app will automatically load the API key from the `.env` file
+
+**Option B: Update the service directly**
 
 - Open `lib/gemini_service.dart`
-- Replace `'YOUR_GEMINI_API_KEY'` on line 6 with your actual API key
+- Replace the environment variable reference with your actual API key
 
-**Option B: Use the app's UI (Recommended)**
+**Option C: Use the app's UI**
 
 - Run the app
 - Enter your API key in the setup screen
@@ -113,6 +119,7 @@ For production apps, consider:
 
 - `google_generative_ai: ^0.4.7` - Official Google Generative AI SDK
 - `http: ^1.1.0` - HTTP client for API requests
+- `flutter_dotenv: ^5.1.0` - Environment variables management
 
 ## Troubleshooting
 
