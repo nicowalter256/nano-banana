@@ -229,10 +229,7 @@ class _GeminiExampleWidgetState extends State<GeminiExampleWidget> {
                     const SizedBox(height: 8),
                     Text(
                       'Current Model: ${_selectedModel ?? 'None selected'}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),

@@ -49,7 +49,8 @@ The Gemini integration includes:
 ### Model Selection
 
 - Choose from multiple Gemini models:
-  - `gemini-1.5-flash` - Fast and efficient (default)
+  - `gemini-2.5-flash` - Latest and most advanced (default)
+  - `gemini-1.5-flash` - Fast and efficient
   - `gemini-1.5-pro` - More capable for complex tasks
   - `gemini-1.0-pro` - Stable and reliable
   - `gemini-1.0-pro-vision` - Supports image input
@@ -86,7 +87,7 @@ final geminiService = GeminiService();
 List<String> models = geminiService.models;
 
 // Change to a different model
-geminiService.changeModel('gemini-1.5-pro');
+geminiService.changeModel('gemini-2.5-flash');
 
 // Get current model
 String currentModel = geminiService.currentModel;

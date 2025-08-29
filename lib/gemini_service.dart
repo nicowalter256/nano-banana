@@ -6,10 +6,11 @@ class GeminiService {
   static String get _apiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
   late GenerativeModel _model;
   late ChatSession _chatSession;
-  String _currentModel = 'gemini-1.5-flash';
+  String _currentModel = 'gemini-2.5-flash';
 
   // Available Gemini models
   static const List<String> availableModels = [
+    'gemini-2.5-flash',
     'gemini-1.5-flash',
     'gemini-1.5-pro',
     'gemini-1.0-pro',
