@@ -5,8 +5,10 @@ This Flutter project now includes Google's Gemini AI integration for generative 
 ## Files Created
 
 1. **`lib/gemini_service.dart`** - Core service class for Gemini AI integration
-2. **`lib/gemini_example_widget.dart`** - Example Flutter widget demonstrating the integration
-3. **`GEMINI_SETUP.md`** - This setup guide
+2. **`lib/gemini_example_widget.dart`** - Text generation widget
+3. **`lib/image_editor_widget.dart`** - Image editing widget
+4. **`lib/main_app.dart`** - Main app with navigation
+5. **`GEMINI_SETUP.md`** - This setup guide
 
 ## Setup Instructions
 
@@ -70,6 +72,14 @@ The Gemini integration includes:
 - Chat history tracking
 - Session management
 
+### Image Editing
+
+- Upload images from gallery, camera, or file system
+- Edit images using natural language prompts
+- Analyze images and get editing suggestions
+- Support for multiple image formats
+- Automatic model switching for vision capabilities
+
 ### Helper Functions
 
 - Pre-built prompt templates
@@ -127,6 +137,19 @@ final analysis = await geminiService.analyzeText(
 );
 ```
 
+### Image Editing
+
+```dart
+// Edit an image with a prompt
+final result = await geminiService.editImage(
+  imageFile,
+  'Make the background blue and add a sunset'
+);
+
+// Analyze an image
+final analysis = await geminiService.analyzeImage(imageFile);
+```
+
 ## API Key Security
 
 ⚠️ **Important Security Notes:**
@@ -146,6 +169,8 @@ For production apps, consider:
 - `google_generative_ai: ^0.4.7` - Official Google Generative AI SDK
 - `http: ^1.1.0` - HTTP client for API requests
 - `flutter_dotenv: ^5.1.0` - Environment variables management
+- `image_picker: ^1.0.7` - Image selection from gallery and camera
+- `file_picker: ^6.1.1` - Cross-platform file selection
 
 ## Troubleshooting
 

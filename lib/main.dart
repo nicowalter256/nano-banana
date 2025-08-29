@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'gemini_example_widget.dart';
+import 'main_app.dart';
 
 void main() async {
   // Load environment variables
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const GeminiExampleWidget(),
+      home: const MainApp(),
     );
   }
 }

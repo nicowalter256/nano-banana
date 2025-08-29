@@ -1,5 +1,8 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:google_generative_ai/src/content.dart';
 
 /// Service class for integrating Google's Gemini AI
 class GeminiService {
@@ -171,6 +174,76 @@ Focus on providing clear, actionable insights.
     // For now, we'll update the environment variable
     dotenv.env['GEMINI_API_KEY'] = newApiKey;
     _initializeModel();
+  }
+
+  /// Edit image using Gemini Vision model
+  /// 
+  /// [imageFile] - The image file to edit
+  /// [prompt] - The editing prompt
+  /// Returns a Future<String> with the edited image data or instructions
+  Future<String> editImage(File imageFile, String prompt) async {
+    try {
+      // Check if current model supports vision
+      if (!_currentModel.contains('vision') && !_currentModel.contains('2.5')) {
+        // Switch to a vision-capable model
+        changeModel('gemini-1.0-pro-vision');
+      }
+
+      // Read image data
+      final Uint8List imageBytes = await imageFile.readAsBytes();
+      
+      // Create content with image and prompt
+      final content = [
+        Content.text('$prompt\n[Image attached]'),
+      ];
+
+      final response = await _model.generateContent(content);
+      
+      if (response.text != null) {
+        return response.text!;
+      } else {
+        return 'No response generated for image editing';
+      }
+    } catch (e) {
+      return 'Error editing image: $e';
+    }
+  }
+
+  /// Generate image description and suggestions
+  /// 
+  /// [imageFile] - The image file to analyze
+  /// Returns a Future<String> with image analysis
+  Future<String> analyzeImage(File imageFile) async {
+    try {
+      // Check if current model supports vision
+      if (!_currentModel.contains('vision') && !_currentModel.contains('2.5')) {
+        // Switch to a vision-capable model
+        changeModel('gemini-1.0-pro-vision');
+      }
+
+      // Read image data
+      final Uint8List imageBytes = await imageFile.readAsBytes();
+      
+      // Create content with image and analysis prompt
+      final content = [
+        Content.text('Please describe this image in detail and suggest possible editing prompts that could be applied to it.\n[Image attached]'),
+      ];
+
+      final response = await _model.generateContent(content);
+      
+      if (response.text != null) {
+        return response.text!;
+      } else {
+        return 'No response generated for image analysis';
+      }
+    } catch (e) {
+      return 'Error analyzing image: $e';
+    }
+  }
+
+  /// Check if current model supports image processing
+  bool get supportsImageProcessing {
+    return _currentModel.contains('vision') || _currentModel.contains('2.5');
   }
 }
 
