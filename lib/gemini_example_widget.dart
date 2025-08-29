@@ -17,11 +17,13 @@ class _GeminiExampleWidgetState extends State<GeminiExampleWidget> {
   String _response = '';
   bool _isLoading = false;
   bool _showApiKeyInput = false;
+  String? _selectedModel;
 
   @override
   void initState() {
     super.initState();
     _checkApiKey();
+    _selectedModel = _geminiService.currentModel;
   }
 
   void _checkApiKey() {
@@ -29,6 +31,16 @@ class _GeminiExampleWidgetState extends State<GeminiExampleWidget> {
       setState(() {
         _showApiKeyInput = true;
       });
+    }
+  }
+
+  void _onModelChanged(String? newModel) {
+    if (newModel != null) {
+      setState(() {
+        _selectedModel = newModel;
+      });
+      _geminiService.changeModel(newModel);
+      _showSnackBar('Model changed to: $newModel');
     }
   }
 
@@ -184,6 +196,50 @@ class _GeminiExampleWidgetState extends State<GeminiExampleWidget> {
               ),
               const SizedBox(height: 16),
             ],
+
+            // Model Selection Section
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Select AI Model:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      value: _selectedModel,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Choose Model',
+                      ),
+                      items: _geminiService.models.map((String model) {
+                        return DropdownMenuItem<String>(
+                          value: model,
+                          child: Text(model),
+                        );
+                      }).toList(),
+                      onChanged: _onModelChanged,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Current Model: ${_selectedModel ?? 'None selected'}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
 
             // Prompt Input Section
             Card(

@@ -4,17 +4,37 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 /// Service class for integrating Google's Gemini AI
 class GeminiService {
   static String get _apiKey => dotenv.env['GEMINI_API_KEY'] ?? '';
-  late final GenerativeModel _model;
-  late final ChatSession _chatSession;
+  late GenerativeModel _model;
+  late ChatSession _chatSession;
+  String _currentModel = 'gemini-1.5-flash';
+
+  // Available Gemini models
+  static const List<String> availableModels = [
+    'gemini-1.5-flash',
+    'gemini-1.5-pro',
+    'gemini-1.0-pro',
+    'gemini-1.0-pro-vision',
+  ];
 
   GeminiService() {
     _initializeModel();
   }
 
+  /// Get the currently selected model
+  String get currentModel => _currentModel;
+
+  /// Get list of available models
+  List<String> get models => availableModels;
+
   /// Initialize the Gemini model
   void _initializeModel() {
+    _initializeModelWithName(_currentModel);
+  }
+
+  /// Initialize the Gemini model with a specific model name
+  void _initializeModelWithName(String modelName) {
     _model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: modelName,
       apiKey: _apiKey,
       generationConfig: GenerationConfig(
         temperature: 0.7,
@@ -24,6 +44,14 @@ class GeminiService {
       ),
     );
     _chatSession = _model.startChat();
+  }
+
+  /// Change the model
+  void changeModel(String modelName) {
+    if (availableModels.contains(modelName)) {
+      _currentModel = modelName;
+      _initializeModelWithName(modelName);
+    }
   }
 
   /// Generate text using Gemini AI

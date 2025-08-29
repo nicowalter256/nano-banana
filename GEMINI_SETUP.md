@@ -46,6 +46,16 @@ flutter run
 
 The Gemini integration includes:
 
+### Model Selection
+
+- Choose from multiple Gemini models:
+  - `gemini-1.5-flash` - Fast and efficient (default)
+  - `gemini-1.5-pro` - More capable for complex tasks
+  - `gemini-1.0-pro` - Stable and reliable
+  - `gemini-1.0-pro-vision` - Supports image input
+- Switch models dynamically during runtime
+- Model-specific configuration and optimization
+
 ### Text Generation
 
 - Generate text responses to any prompt
@@ -66,6 +76,21 @@ The Gemini integration includes:
 - Error handling and validation
 
 ## Usage Examples
+
+### Model Selection
+
+```dart
+final geminiService = GeminiService();
+
+// Get available models
+List<String> models = geminiService.models;
+
+// Change to a different model
+geminiService.changeModel('gemini-1.5-pro');
+
+// Get current model
+String currentModel = geminiService.currentModel;
+```
 
 ### Basic Text Generation
 
