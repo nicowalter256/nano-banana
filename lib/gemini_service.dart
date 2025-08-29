@@ -3,7 +3,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 /// Service class for integrating Google's Gemini AI
 class GeminiService {
   static const String _apiKey =
-      'YOUR_GEMINI_API_KEY'; // Replace with your actual API key
+      'AIzaSyDW-AxBGMh51ll9jV7g8cJn4NCOU7gCv9A'; // Replace with your actual API key
   late final GenerativeModel _model;
   late final ChatSession _chatSession;
 
